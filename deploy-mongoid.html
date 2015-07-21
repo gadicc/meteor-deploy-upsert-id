@@ -1,0 +1,30 @@
+<head>
+  <title>repro-deploy-mongoid.meteor.com</title>
+</head>
+
+<body>
+  <h1>repro-deploy-mongoid.meteor.com</h1>
+
+  <h2>Ops</h2>
+
+  <pre><code>col.insert({ _id: 'insert1' });
+col.insert({ _id: 'insert2' });
+
+col.upsert('upsert1', {});
+col.upsert('upsert2', {});
+
+col.upsert('upsert2', { wasUpdated: 1 });
+col.upsert('insert2', { wasUpdated: 1 });
+</code></pre>
+
+  <h2>Results (Expected -- what we get in local dev)</h2>
+
+  <pre><code>{"_id":"insert1"}
+{"_id":"insert2","wasUpdated":1}
+{"_id":"upsert1"}
+{"_id":"upsert2","wasUpdated":1}</code></pre>
+
+  <h2>Results (Received)</h2>
+
+  <pre><code>{{results}}</code></pre>
+</body>
